@@ -3,8 +3,8 @@
 #include<ctime>
 #include<cstdlib>
 #include<iomanip>
-
 using namespace std;
+
 
 class Unit{
 		string name;
@@ -63,13 +63,50 @@ void Unit::newTurn(){
 	guard_on = false;
 }
 
+bool Unit::isDead(){
+if(hp <= 0)return true;
+else return false;
+}
 
 
-/////////////////////////////////////////////////////////////////////////////////////
-//Write function members isDead(), guard(), heal(), beAttacked(), and attack() here//
-/////////////////////////////////////////////////////////////////////////////////////
+void Unit::guard(){
+guard_on = true;
+}
 
 
+int Unit::beAttacked(int oppatk){
+    int dmg;
+	if(guard_on==false){
+    dmg = oppatk - def ;
+	hp = hp - dmg; 
+	return dmg;
+    }else{
+	dmg = (oppatk - def)/3 ;
+	hp = hp -dmg;
+	return dmg;
+	}
+}
+
+
+int Unit::attack(Unit &type){
+	return type.beAttacked(atk);
+}
+
+
+int Unit:: heal(){
+    int healling=rand()%21+10;
+    if(hp==hpmax) {
+		hp = hp;
+		return 0;}
+	else if(healling+hp>=hpmax){
+		healling = hpmax-hp;
+		hp = hpmax;
+		return healling ;} 
+	else {
+		hp += healling;
+		return healling;}
+	
+}
 
 void drawScene(char p_action,int p,char m_action,int m){
 	cout << "                                                       \n";
